@@ -304,6 +304,20 @@ void hostPowerManagementEventHandler(kaleidoscope::HostPowerManagement::Event ev
   */
 
 
+KALEIDOSCOPE_INIT_PLUGINS(
+  LangPack_EU,
+  BootGreetingEffect,
+  TestMode,
+  LEDControl,
+  LEDOff,
+  LEDRainbowEffect,
+  LEDRainbowWaveEffect,
+  LEDChaseEffect,
+  NumPad,
+  Macros,
+  MouseKeys,
+  HostPowerManagement
+);
 void setup() {
   // First, call Kaleidoscope's internal setup function
   Kaleidoscope.setup();
@@ -312,57 +326,6 @@ void setup() {
   // The order can be important. For example, LED effects are
   // added in the order they're listed here.
     // The boot greeting effect pulses the LED button for 10 seconds after the keyboard is first connected
-  KALEIDOSCOPE_INIT_PLUGINS(European,
-    BootGreetingEffect,
-
-    // The hardware test mode, which can be invoked by tapping Prog, LED and the left Fn button at the same time.
-    TestMode,
-
-    // LEDControl provides support for other LED modes
-    LEDControl,
-
-    // We start with the LED effect that turns off all the LEDs.
-    LEDOff,
-
-    // The rainbow effect changes the color of all of the keyboard's keys at the same time
-    // running through all the colors of the rainbow.
-    LEDRainbowEffect,
-
-    // The rainbow wave effect lights up your keyboard with all the colors of a rainbow
-    // and slowly moves the rainbow across your keyboard
-    LEDRainbowWaveEffect,
-
-    // The chase effect follows the adventure of a blue pixel which chases a red pixel across
-    // your keyboard. Spoiler: the blue pixel never catches the red pixel
-    LEDChaseEffect,
-
-    // These static effects turn your keyboard's LEDs a variety of colors
-    //&solidRed, &solidOrange, &solidYellow, &solidGreen, &solidBlue, &solidIndigo, &solidViolet,
-
-    // The breathe effect slowly pulses all of the LEDs on your keyboard
-    //t&LEDBreatheEffect,
-
-    // The AlphaSquare effect prints each character you type, using your
-    // keyboard's LEDs as a display
-    //&AlphaSquareEffect,
-
-    // The stalker effect lights up the keys you've pressed recently
-    //&StalkerEffect,
-
-    // The numpad plugin is responsible for lighting up the 'numpad' mode
-    // with a custom LED effect
-    NumPad,
-
-    // The macros plugin adds support for macros
-    Macros,
-
-    // The MouseKeys plugin lets you add keys to your keymap which move the mouse.
-    MouseKeys,
-
-    // The HostPowerManagement plugin enables waking up the host from suspend,
-    // and allows us to turn LEDs off when it goes to sleep.
-    HostPowerManagement
-  );
 
   // While we hope to improve this in the future, the NumPad plugin
   // needs to be explicitly told which keymap layer is your numpad layer
