@@ -18,6 +18,7 @@
 
 #include "Kaleidoscope-LangPack-European.h"
 
+#include <Kaleidoscope-PrefixLayer.h>
 
 // Support for keys that move the mouse
 #include "Kaleidoscope-MouseKeys.h"
@@ -125,7 +126,7 @@ enum { MACRO_VERSION_INFO,
   *
   */
 
-enum { QWERTY, NUMPAD, FUNCTION, ACCENTS }; // layers
+enum { QWERTY, NUMPAD, FUNCTION, ACCENTS, TMUX }; // layers
 
 /* This comment temporarily turns off astyle's indent enforcement
  *   so we can make the keymaps actually resemble the physical key layout better
@@ -140,7 +141,7 @@ KEYMAPS(
    Key_PageUp,   Key_A, Key_S, Key_D, Key_F, Key_G,
    Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, Key_Escape,
    Key_LeftControl, Key_Backspace, Key_PcApplication, Key_LeftShift,
-   ShiftToLayer(FUNCTION),
+   ShiftToLayer(ACCENTS),
 
    M(MACRO_ANY),  Key_6, Key_7, Key_8,     Key_9,         Key_0,         LockLayer(NUMPAD),
    Key_Enter,     Key_Y, Key_U, Key_I,     Key_O,         Key_P,         Key_Equals,
@@ -182,8 +183,8 @@ KEYMAPS(
 
   [ACCENTS] =  KEYMAP_STACKED
   (___,      ___,           ___,      ___,     ___,        ___,           XXX,
-   ___,  ___,              ___, INTL_EACUTE,        ___, ___, ___,
-   ___, ___,       ___, ___, ___, ___,
+   ___,  ___,              ___, INTL(EACUTE),       INTL(EGRAVE), ___, ___,
+   INTL(AACUTE), INTL(AGRAVE),       ___, ___, ___, ___,
    ___,  ___,  ___,  ___,        ___, ___,  ___,
    ___, ___, ___, ___,
    ___,
@@ -193,8 +194,23 @@ KEYMAPS(
                                ___,          ___,            ___,              ___,  ___,              ___,
    ___,          ___,          ___, ___, ___,             ___,    ___,
    ___, ___, ___, ___,
-   ___)
+   ___),
+  [TMUX] = KEYMAP_STACKED
+  (
+    ___, ___, ___, ___, ___, ___, ___,
+    ___, ___, ___, ___, ___, ___, ___,
+    ___, ___, ___, ___, ___, ___,
+    ___, ___, ___, ___, ___, ___, ___,
+    Key_LeftArrow, Key_DownArrow, Key_UpArrow, Key_RightArrow,
+         ___,
 
+    ___,  ___, ___, ___, ___, ___, ___,
+    ___,  ___, ___, ___, ___, ___, ___,
+          ___, ___, ___, ___, ___, ___,
+    ___, ___,  ___, ___, ___, ___, ___,
+      ___, ___, ___, ___,
+        ___
+  ),
 	) // KEYMAPS(
 
 /* Re-enable astyle's indent enforcement */
@@ -306,6 +322,7 @@ void hostPowerManagementEventHandler(kaleidoscope::HostPowerManagement::Event ev
 
 KALEIDOSCOPE_INIT_PLUGINS(
   LangPack_EU,
+  PrefixLayer,
   BootGreetingEffect,
   TestMode,
   LEDControl,
@@ -318,9 +335,16 @@ KALEIDOSCOPE_INIT_PLUGINS(
   MouseKeys,
   HostPowerManagement
 );
+
+// for prefixlayer https://github.com/jamesnvc/Kaleidoscope-PrefixLayer/blob/master/examples/PrefixLayer/PrefixLayer.ino#L64
+static const kaleidoscope::PrefixLayer::dict_t prefixlayerdict[] PROGMEM = PREFIX_DICT({TMUX, PREFIX_SEQ(LCTRL(Key_B))});
+
 void setup() {
   // First, call Kaleidoscope's internal setup function
   Kaleidoscope.setup();
+  LangPack_EU.compose_key = Key_PcApplication;
+  // https://github.com/jamesnvc/Kaleidoscope-PrefixLayer/blob/master/examples/PrefixLayer/PrefixLayer.ino#L69-L70
+  PrefixLayer.dict = prefixlayerdict;
 
   // Next, tell Kaleidoscope which plugins you want to use.
   // The order can be important. For example, LED effects are
