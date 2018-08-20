@@ -342,7 +342,7 @@ static const kaleidoscope::PrefixLayer::dict_t prefixlayerdict[] PROGMEM = PREFI
 void setup() {
   // First, call Kaleidoscope's internal setup function
   Kaleidoscope.setup();
-  LangPack_EU.compose_key = Key_PcApplication;
+  // LangPack_EU.compose_key = Key_PcApplication;
   // https://github.com/jamesnvc/Kaleidoscope-PrefixLayer/blob/master/examples/PrefixLayer/PrefixLayer.ino#L69-L70
   PrefixLayer.dict = prefixlayerdict;
 
